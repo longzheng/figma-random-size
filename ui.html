@@ -1,17 +1,79 @@
-<h2>Rectangle Creator</h2>
-<p>Count: <input id="count" value="5"></p>
-<button id="create">Create</button>
-<button id="cancel">Cancel</button>
+<link rel="stylesheet" href="https://static.figma.com/api/figma-extension-api-0.0.1.css">
+
+<p>
+  <label>Dimension:</label>
+  <select id="dimension">
+    <option value="w">Width</option>
+    <option value="h">Height</option>
+  </select>
+</p>
+
+<p>
+  <label>Minimum size:</label>
+  <input type="number" id="min" value="0" min="0" />
+</p>
+
+<p>
+  <label>Maximum size:</label>
+  <input type="number" id="max" value="100" min="0" />
+</p>
+
+<div id="buttons">
+  <button type="submit" id="randomize">Randomize</button>
+  <button id="cancel">Cancel</button>
+</div>
+
 <script>
 
-document.getElementById('create').onclick = () => {
-  const textbox = document.getElementById('count');
-  const count = parseInt(textbox.value, 10);
-  parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*')
-}
+  document.getElementById('randomize').onclick = () => {
+    const dimension = document.getElementById('dimension').value;
+    const max = Math.max(parseInt(document.getElementById('max').value), 0);
+    const min = Math.max(parseInt(document.getElementById('min').value), 0);
+    parent.postMessage({ pluginMessage: { type: 'resize', dimension, max, min } }, '*')
+  }
 
-document.getElementById('cancel').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-}
+  document.getElementById('cancel').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+  }
 
 </script>
+
+<style>
+  html,
+  body {
+    font-size: 14px;
+  }
+
+  select,
+  input {
+    font-size: 100%;
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  select {
+    width: 150px;
+  }
+
+  label {
+    display: inline-block;
+    width: 100px;
+  }
+
+  #buttons {
+    display: flex;
+    margin-left: 100px;
+  }
+
+  button {
+    border: 1px solid black;
+  }
+
+  button#randomize {
+    margin-right: 5px;
+    background: #18A0FB;
+    border-color: currentColor;
+    color: white;
+  }
+</style>
