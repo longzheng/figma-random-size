@@ -1,11 +1,14 @@
 {
   "name": "random-size",
   "version": "1.0.0",
-  "description": "Your Figma Plugin",
+  "description": "Figma plugin to randomize size of selected layers",
   "main": "code.js",
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
   "author": "",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.15.0"
+  }
 }
