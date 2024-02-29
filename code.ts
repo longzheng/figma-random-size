@@ -15,16 +15,25 @@ figma.ui.onmessage = (msg: message) => {
     const min = msg.min;
     const max = msg.max;
 
-    selection.forEach((layer, index) => {
+    selection.forEach((node) => {
+      if (!('resize' in node)) {
+        return;
+      }
+
       const randomSize = getRandomInt(min, max);
 
       switch (msg.dimension) {
         case "w": {
-          layer.resize(randomSize, layer.height);
+          node.resize(randomSize, node.height);
           break;
         }
         case "h": {
-          layer.resize(layer.width, randomSize);
+          node.resize(node.width, randomSize);
+          break;
+        }
+        case "both": {
+          const randomSize2 = getRandomInt(min, max);
+          node.resize(randomSize, randomSize2);
           break;
         }
         default:
